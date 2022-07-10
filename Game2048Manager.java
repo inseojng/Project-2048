@@ -1,7 +1,4 @@
-package kr.ac.snu.sbkim28.game.core;
-
 import javafx.scene.input.KeyCode;
-import kr.ac.snu.sbkim28.game.render.ICanvas;
 
 public class Game2048Manager extends GameManager{
 
@@ -11,19 +8,21 @@ public class Game2048Manager extends GameManager{
 
     @Override
     public void update() {
-        int dir;
+        int dir = -1;
 
         // set dir.
-        if(keyHolder.keyDown(KeyCode.RIGHT)){
-
-        } else if(keyHolder.keyDown(KeyCode.LEFT)){
-
-        } else if(keyHolder.keyDown(KeyCode.UP)){
-
+        if(keyHolder.keyDown(KeyCode.LEFT)){
+            dir = 0;
+        } else if(keyHolder.keyDown(KeyCode.RIGHT)){
+            dir = 1;
         } else if(keyHolder.keyDown(KeyCode.DOWN)){
-
+            dir = 2;
+        } else if(keyHolder.keyDown(KeyCode.UP)){
+            dir = 3;
         }
 
-        // call update method here.
+        if(dir != -1) {
+            // cell.update(dir);
+        }
     }
 }
