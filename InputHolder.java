@@ -1,5 +1,3 @@
-package kr.ac.snu.sbkim28.game.core;
-
 import javafx.scene.input.KeyCode;
 
 /**

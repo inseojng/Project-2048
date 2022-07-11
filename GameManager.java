@@ -1,8 +1,4 @@
-package kr.ac.snu.sbkim28.game.core;
-
 import javafx.scene.canvas.GraphicsContext;
-import kr.ac.snu.sbkim28.game.render.ICanvas;
-import kr.ac.snu.sbkim28.game.render.RenderCompositeCollection;
 
 /**
  * @author sbkim28
@@ -98,6 +94,8 @@ public abstract class GameManager implements Runnable{
         run = true;
         prevFrame = Integer.MIN_VALUE;
 
+        initialize();
+
         long time;
         while (run){
             time = System.currentTimeMillis();
@@ -110,6 +108,13 @@ public abstract class GameManager implements Runnable{
                 keyHolder.flash();
             }
         }
+    }
+
+    /**
+     * 게임 시작 시 한번 호출되는 method.
+     */
+    public void initialize(){
+
     }
 
     /**

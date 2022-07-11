@@ -2,8 +2,19 @@ import javafx.scene.input.KeyCode;
 
 public class Game2048Manager extends GameManager{
 
-    public Game2048Manager(ICanvas canvas) {
+    private Cell cell;
+    private StartEnd startEnd;
+
+    public Game2048Manager(ICanvas canvas, Cell cell) {
         super(canvas);
+        this.cell = cell;
+        startEnd = new StartEnd(cell);
+    }
+
+    @Override
+    public void initialize() {
+        startEnd.startGame();
+        cell.fillGrid();
     }
 
     @Override
@@ -22,7 +33,11 @@ public class Game2048Manager extends GameManager{
         }
 
         if(dir != -1) {
-            // cell.update(dir);
+            cell.update(dir);
+            startEnd.checkGameEnd();
         }
+
+
     }
 }
+
