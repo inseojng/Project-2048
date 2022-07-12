@@ -6,6 +6,7 @@ public class Cell {
 
     private int N, M;
     private Block[][] grid;
+    private Block[][] buff;
     private Random rand;
 
     public Cell() {
@@ -27,6 +28,7 @@ public class Cell {
 
     public void fillGrid() {
         this.grid = new Block[this.N][this.M];
+        buff = new Block[N][M];
         for(int i=0; i<this.N; i++) {
             for(int j=0; j<this.M; j++) {
                 this.grid[i][j] = new Block(i, j);
@@ -40,8 +42,26 @@ public class Cell {
         this.grid[y][x]=block;
     }
 
+    private void writeBuff(){
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < M; ++j) {
+                buff[i][j] = grid[i][j];
+            }
+        }
+    }
+
+    private boolean differentWithBuff(){
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < M; ++j) {
+                if(buff[i][j].getVal() != grid[i][j].getVal())
+                    return true;
+            }
+        }
+        return false;
+    }
+
     public boolean update(int dir) {
-        boolean moved = false;
+        writeBuff();
         if(dir==0) { // Left
             for(int i=0; i<this.N; i++) {
                 List<Block> V = new ArrayList<>(6);
@@ -122,7 +142,7 @@ public class Cell {
                 for(; cnt<this.N; cnt++) pushBlock(this.N-1-cnt, i, new Block());
             }
         }
-        return moved;
+        return differentWithBuff();
     }
 
     public boolean gameOver() {

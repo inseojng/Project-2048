@@ -20,7 +20,7 @@ public class StartEnd {
             System.out.println("WON");
             ret = true;
             // todo
-        } else if (cell.isBoardFull() && !cell.canTilesMove()) {
+        } else if (!cell.canTilesMove()) {
             System.out.println("LOST");
             ret = true;
             // todo

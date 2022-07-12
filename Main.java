@@ -16,25 +16,30 @@ public class Main {
         InputHolder holder = manager.keyHolder;
         while (true){
             if(br.ready()){
-                char c = br.readLine().charAt(0);
-
-                switch (c){
-                    case 'a':
-                    case 'A':
-                        holder.setKeyDown(KeyCode.LEFT);
-                        break;
-                    case 'd':
-                    case 'D':
-                        holder.setKeyDown(KeyCode.RIGHT);
-                        break;
-                    case 's':
-                    case 'S':
-                        holder.setKeyDown(KeyCode.DOWN);
-                        break;
-                    case 'w':
-                    case 'W':
-                        holder.setKeyDown(KeyCode.UP);
-                        break;
+                String line = br.readLine();
+                if(!line.isEmpty()) {
+                    char c = line.charAt(0);
+                    switch (c) {
+                        case 'a':
+                        case 'A':
+                            holder.setKeyDown(KeyCode.LEFT);
+                            break;
+                        case 'd':
+                        case 'D':
+                            holder.setKeyDown(KeyCode.RIGHT);
+                            break;
+                        case 's':
+                        case 'S':
+                            holder.setKeyDown(KeyCode.DOWN);
+                            break;
+                        case 'w':
+                        case 'W':
+                            holder.setKeyDown(KeyCode.UP);
+                            break;
+                        case ' ':
+                            holder.setKeyDown(KeyCode.SPACE);
+                            break;
+                    }
                 }
             }
         }

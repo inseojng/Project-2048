@@ -15,6 +15,7 @@ public class Game2048Manager extends GameManager{
 
     @Override
     public void initialize() {
+        finished = false;
         cell.fillGrid();
         startEnd.startGame();
         Main.drawConsole(cell);
@@ -22,9 +23,18 @@ public class Game2048Manager extends GameManager{
 
     @Override
     public void update() {
-        if(finished)
+        if(finished) {
+            if(keyHolder.keyPressed(KeyCode.SPACE)){
+                initialize();
+            }
             return;
+        }
 
+        boolean gameEnd = startEnd.checkGameEnd();
+        if(gameEnd){
+            finished = true;
+            return;
+        }
         int dir = -1;
 
         // set dir.
@@ -39,13 +49,12 @@ public class Game2048Manager extends GameManager{
         }
 
         if(dir != -1) {
-            cell.update(dir);
-            boolean gameEnd = startEnd.checkGameEnd();
-            if(gameEnd){
-                finished = true;
-            } else {
-                cell.createNewTile();
-            }
+            boolean moved = cell.update(dir);
+            if(!moved)
+                return;
+
+            cell.createNewTile();
+
             Main.drawConsole(cell);
         }
     }
