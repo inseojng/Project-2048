@@ -17,6 +17,14 @@ public class Cell {
         rand = new Random();
     }
 
+    public int getN() {
+        return N;
+    }
+
+    public int getM() {
+        return M;
+    }
+
     public void fillGrid() {
         this.grid = new Block[this.N][this.M];
         for(int i=0; i<this.N; i++) {
@@ -32,7 +40,8 @@ public class Cell {
         this.grid[y][x]=block;
     }
 
-    public void update(int dir) {
+    public boolean update(int dir) {
+        boolean moved = false;
         if(dir==0) { // Left
             for(int i=0; i<this.N; i++) {
                 List<Block> V = new ArrayList<>(6);
@@ -113,6 +122,7 @@ public class Cell {
                 for(; cnt<this.N; cnt++) pushBlock(this.N-1-cnt, i, new Block());
             }
         }
+        return moved;
     }
 
     public boolean gameOver() {
@@ -152,7 +162,15 @@ public class Cell {
             }
         }
 
-        // todo.
-        // V.get(rand.nextInt(V.size())).create();
+        create(V.get(rand.nextInt(V.size())));
+    }
+
+    private void create(Block b){
+        b.setVal(rand.nextInt(5) == 0 ? 1 : 0);
+    }
+
+    // tmp, remove after.
+    public Block[][] getGrid() {
+        return grid;
     }
 }

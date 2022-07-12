@@ -74,6 +74,7 @@ public abstract class GameManager implements Runnable{
         run = false;
         durationTime = 40;
         renderBody = new RenderCompositeCollection();
+        keyHolder = new UserInputHandler();
     }
 
     /**

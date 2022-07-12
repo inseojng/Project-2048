@@ -11,17 +11,21 @@ public class StartEnd {
         Score highestScore = new Score();
         highestScore.highest = 0;*/ // todo.
         cell.createNewTile();
+        cell.createNewTile();
     }
 
-    public void checkGameEnd() {
+    public boolean checkGameEnd() {
+        boolean ret = false;
         if (cell.gameOver()) {
             System.out.println("WON");
+            ret = true;
             // todo
         } else if (cell.isBoardFull() && !cell.canTilesMove()) {
             System.out.println("LOST");
+            ret = true;
             // todo
-        } else {
-            cell.createNewTile();
         }
+
+        return ret;
     }
 }
