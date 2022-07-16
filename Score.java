@@ -1,9 +1,7 @@
 import java.io.*;
 
-
-public class Score {
-
-    private int score = 0;
+public class Score implements Serializable {
+    private int score;
     private int highestScore;
 
     public Score() {
@@ -56,17 +54,11 @@ public class Score {
         }
     }
 
-    public static Score loadScore(File file){
+    public static Score loadScore(File file) throws IOException {
         BufferedReader br = null;
         Score s = new Score();
-        try {
-            br = new BufferedReader(new FileReader(file));
-            s.highestScore = Integer.parseInt(br.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-            //todo fail to read error msg.
-        }
+        br = new BufferedReader(new FileReader(file));
+        s.highestScore = Integer.parseInt(br.readLine());
         return s;
     }
-
 }

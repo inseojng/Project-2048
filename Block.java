@@ -26,7 +26,9 @@ public class Block {
     public int getVal() {
         return this.val;
     }
-    public void addVal() { this.val++; }
+    public int addVal() {
+        return ++this.val;
+    }
 
     public void setX(int _x) {
         this.x = _x;

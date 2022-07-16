@@ -1,19 +1,27 @@
+import javafx.geometry.VPos;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Cell {
+public class Cell implements RenderComposite{
 
+    private Score score;
     private int N, M;
     private Block[][] grid;
     private Block[][] buff;
     private Random rand;
 
-    public Cell() {
-        this(4, 4);
+    public Cell(Score score) {
+        this(score, 4, 4);
     }
 
-    public Cell(int _N, int _M) {
+    public Cell(Score score, int _N, int _M) {
+        this.score = score;
         this.N = _N; this.M = _M;
         rand = new Random();
     }
@@ -60,6 +68,10 @@ public class Cell {
         return false;
     }
 
+    public void addBlockValue(Block block){
+        score.addScore(2 << block.addVal());
+    }
+
     public boolean update(int dir) {
         writeBuff();
         if(dir==0) { // Left
@@ -71,7 +83,7 @@ public class Cell {
                 int cnt=0, size=V.size();
                 for(int j=0; j<size; j++) {
                     if(j+1<size && V.get(j+1).getVal()==V.get(j).getVal()) {
-                        V.get(j).addVal();
+                        addBlockValue(V.get(j));
                         pushBlock(i, cnt++, V.get(j));
                         j++;
                     }
@@ -91,7 +103,7 @@ public class Cell {
                 int cnt=0, size=V.size();
                 for(int j=0; j<size; j++) {
                     if(j+1<size && V.get(j+1).getVal()==V.get(j).getVal()) {
-                        V.get(j).addVal();
+                        addBlockValue(V.get(j));
                         pushBlock(i, this.N-1-cnt++, V.get(j));
                         j++;
                     }
@@ -111,7 +123,7 @@ public class Cell {
                 int cnt=0, size = V.size();
                 for(int j=0; j<size; j++) {
                     if(j+1<size && V.get(j+1).getVal()==V.get(j).getVal()) {
-                        V.get(j).addVal();
+                        addBlockValue(V.get(j));
                         pushBlock(cnt++, i, V.get(j));
                         j++;
                     }
@@ -131,7 +143,7 @@ public class Cell {
                 int cnt=0, size=V.size();
                 for(int j=0; j<size; j++) {
                     if(j+1<size && V.get(j+1).getVal()==V.get(j).getVal()) {
-                        V.get(j).addVal();
+                        addBlockValue(V.get(j));
                         pushBlock(this.N-1-cnt++, i, V.get(j));
                         j++;
                     }
@@ -189,8 +201,52 @@ public class Cell {
         b.setVal(rand.nextInt(5) == 0 ? 1 : 0);
     }
 
-    // tmp, remove after.
-    public Block[][] getGrid() {
-        return grid;
+    private static final Color[] colorMap = {
+            Color.rgb(238, 228, 218),
+            Color.rgb(239, 226, 207),
+            Color.rgb(246, 179, 127),
+            Color.rgb(247, 152, 106),
+            Color.rgb(247, 124, 95),
+            Color.rgb(247, 95, 59),
+            Color.rgb(237, 208, 115),
+            Color.rgb(237, 204, 98),
+            Color.rgb(237, 210, 119),
+            Color.rgb(239, 207, 108),
+            Color.rgb(237, 205, 94),
+    };
+
+    public static final Color textColor = Color.rgb(249, 246, 242);
+    private static final Font blockFont = new Font("HY견고딕", 36);
+    private static final Color textColor1 = Color.rgb(120, 110, 101);
+    private static final Color textColor2 = Color.rgb(248, 243, 237);
+
+
+    @Override
+    public void render(GraphicsContext gc) {
+        int x;
+        int y = GameRenderer.startY;
+        int blockSize = GameRenderer.blockSize;
+        int blockCenter = blockSize / 2;
+        gc.setFont(blockFont);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setTextBaseline(VPos.CENTER);
+
+        for (int i = 0; i < N; ++i) {
+            x = GameRenderer.startX;
+            for (int j = 0; j < M; ++j) {
+
+                //todo set Color;
+                int val = grid[i][j].getVal();
+                if(val != -1) {
+                    gc.setFill(colorMap[val]);
+                    gc.fillRoundRect(x, y, blockSize, blockSize, 20, 20);
+                    gc.setFill(val <= 1 ? textColor1 : textColor2);
+                    gc.fillText("" + (2 << val), x + blockCenter, y + blockCenter);
+                }
+                x += GameRenderer.blockDiff;
+                ;
+            }
+            y += GameRenderer.blockDiff;
+        }
     }
 }
