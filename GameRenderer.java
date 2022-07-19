@@ -73,5 +73,10 @@ public class GameRenderer implements RenderComposite{
         }
     }
 
+    @Override
+    public void render(GraphicsContext gc, long tick) {
+        this.render(gc);
+    }
+
 
 }

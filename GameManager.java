@@ -72,7 +72,7 @@ public abstract class GameManager implements Runnable{
     public GameManager(ICanvas canvas) {
         this.canvas = canvas;
         run = false;
-        durationTime = 40;
+        durationTime = 20;
         renderBody = new RenderCompositeCollection();
         keyHolder = new UserInputHandler();
     }
@@ -105,7 +105,7 @@ public abstract class GameManager implements Runnable{
                 prevFrame = time;
                 ++tick;
                 update();
-                renderBody.render(canvas.getGraphicsContext());
+                renderBody.render(canvas.getGraphicsContext(), tick);
                 keyHolder.flash();
             }
         }
@@ -136,10 +136,10 @@ public abstract class GameManager implements Runnable{
      * Getter of {@link GameManager#elapsedTime}
      * @return {@link GameManager#elapsedTime}
      */
-    public long getElapsedTime() {
+    public long getElapsedTime()
+    {
         return elapsedTime;
     }
-
     /**
      * Getter of {@link GameManager#tick}
      * @return {@link GameManager#tick}

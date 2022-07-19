@@ -78,7 +78,7 @@ public class Game2048Manager extends GameManager{
         }
 
         if(dir != -1) {
-            boolean moved = cell.update(dir);
+            boolean moved = cell.update(dir, this.getTick());
             if(!moved)
                 return;
 

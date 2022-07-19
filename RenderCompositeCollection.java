@@ -8,4 +8,9 @@ public class RenderCompositeCollection extends LinkedList<RenderComposite> imple
         for (RenderComposite r : this)
             r.render(gc);
     }
+    @Override
+    public void render(GraphicsContext gc, long tick) {
+        for (RenderComposite r : this)
+            r.render(gc, tick);
+    }
 }
