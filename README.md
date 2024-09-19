@@ -1,1 +1,4 @@
-# G3-2048
+Over-the-SNU
+Project in group 3
+2048
+
